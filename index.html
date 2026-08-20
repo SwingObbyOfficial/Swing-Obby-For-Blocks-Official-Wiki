@@ -3,538 +3,619 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Swing Obby For Blocks - Wiki & News</title>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <title>Swing Obby For Blocks - Ultra HD Wiki Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-main: #090d16;
-      --panel-bg: rgba(18, 26, 43, 0.75);
-      --border: rgba(255, 255, 255, 0.08);
-      --text-bright: #f1f5f9;
-      --text-muted: #94a3b8;
-      
-      --active-accent: #6366f1;
-      --active-glow: rgba(99, 102, 241, 0.25);
+      --bg-dark: #03050a;
+      --card-bg: rgba(15, 20, 32, 0.75);
+      --card-border: rgba(255, 215, 0, 0.2);
+      --accent-gold: #ffd700;
+      --accent-gold-bright: #fff3a1;
+      --accent-glow: rgba(255, 215, 0, 0.4);
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --radius-lg: 24px;
+      --radius-md: 14px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Outfit', sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
 
     body {
-      background-color: var(--bg-main);
-      color: var(--text-bright);
+      background-color: var(--bg-dark);
+      color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      background-image: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.12) 0%, transparent 60%);
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(255, 215, 0, 0.12) 0%, transparent 45%),
+        radial-gradient(circle at 85% 85%, rgba(255, 140, 0, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.5) 0%, transparent 100%);
+      background-attachment: fixed;
+      overflow-x: hidden;
     }
 
-    /* Header */
-    header {
-      background: rgba(9, 13, 22, 0.85);
-      -webkit-backdrop-filter: blur(16px);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      padding: 18px 32px;
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(5, 7, 15, 0.8);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 215, 0, 0.3);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-gold);
+    }
+
+    nav {
+      background: rgba(3, 5, 10, 0.85);
+      -webkit-backdrop-filter: blur(24px);
+      backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--card-border);
+      padding: 18px 40px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
       gap: 16px;
     }
 
-    .brand-wrap {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo-text {
-      font-size: 1.25rem;
-      font-weight: 800;
+    .brand-title {
+      font-size: 1.5rem;
+      font-weight: 900;
       letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #ffffff, #cbd5e1);
+      background: linear-gradient(135deg, #ffffff 0%, var(--accent-gold-bright) 50%, var(--accent-gold) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
     }
 
-    .author-tag {
-      background: linear-gradient(135deg, #ffd700, #ffa500);
+    .author-badge {
+      background: linear-gradient(135deg, #ffd700, #ff8c00);
       color: #000;
-      font-weight: 800;
+      font-weight: 900;
       font-size: 0.72rem;
-      padding: 4px 10px;
-      border-radius: 20px;
+      padding: 5px 14px;
+      border-radius: 30px;
+      letter-spacing: 1.2px;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
       text-transform: uppercase;
-      letter-spacing: 0.5px;
-      box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
-      white-space: nowrap;
+      border: 1px solid rgba(255, 255, 255, 0.4);
     }
 
-    .search-bar {
-      width: 100%;
-      max-width: 280px;
+    .search-box {
+      position: relative;
+      width: 320px;
     }
 
-    .search-bar input {
+    .search-box input {
       width: 100%;
-      padding: 10px 16px;
       background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border);
-      border-radius: 10px;
+      border: 1px solid var(--card-border);
+      padding: 12px 20px;
+      border-radius: 30px;
       color: #fff;
-      font-size: 0.88rem;
+      font-size: 0.92rem;
       outline: none;
-      transition: all 0.2s;
+      transition: var(--transition);
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
     }
 
-    .search-bar input:focus {
-      border-color: var(--active-accent);
-      box-shadow: 0 0 15px var(--active-glow);
+    .search-box input:focus {
+      border-color: var(--accent-gold);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 25px var(--accent-glow), inset 0 2px 4px rgba(0,0,0,0.4);
     }
 
-    /* Layout */
-    .app-container {
-      display: flex;
-      max-width: 1350px;
+    .wrapper {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 32px;
+      max-width: 1450px;
       width: 100%;
-      margin: 24px auto;
-      padding: 0 24px;
-      gap: 24px;
+      margin: 32px auto;
+      padding: 0 32px;
       flex: 1;
     }
 
-    /* Sidebar */
     aside {
-      width: 290px;
-      background: var(--panel-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
       height: fit-content;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     }
 
-    .sidebar-section {
-      margin-bottom: 12px;
+    .menu-group-title {
+      font-size: 0.82rem;
+      font-weight: 900;
+      color: var(--accent-gold);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 8px 0 4px 8px;
     }
 
-    .sidebar-section:last-child {
-      margin-bottom: 0;
-    }
-
-    .section-btn {
+    .accordion-btn {
       width: 100%;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid var(--border);
-      color: var(--text-bright);
-      padding: 12px 14px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--card-border);
+      color: #fff;
+      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      font-weight: 800;
+      font-size: 0.98rem;
       cursor: pointer;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: 0.2s;
+      transition: var(--transition);
     }
 
-    .section-btn:hover {
-      background: rgba(255, 255, 255, 0.06);
+    .accordion-btn:hover {
+      background: rgba(255, 215, 0, 0.08);
+      border-color: var(--accent-gold);
+      color: var(--accent-gold);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     }
 
-    .item-list {
+    .accordion-content {
       display: none;
       list-style: none;
-      padding: 8px 4px 4px 8px;
-      max-height: 260px;
+      padding: 10px 6px;
+      max-height: 300px;
       overflow-y: auto;
     }
 
-    .item-list.open {
+    .accordion-content.active {
       display: block;
     }
 
-    .item-list li a {
-      color: var(--text-muted);
+    .accordion-content li a {
+      color: var(--text-sub);
       text-decoration: none;
-      display: block;
-      padding: 7px 10px;
-      font-size: 0.85rem;
-      border-radius: 6px;
-      transition: all 0.2s;
-      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      border-radius: 10px;
+      transition: var(--transition);
+      margin-bottom: 2px;
     }
 
-    .item-list li a:hover {
+    .accordion-content li a:hover {
       color: #fff;
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 215, 0, 0.12);
+      padding-left: 18px;
     }
 
-    .item-list li a.gold-item:hover { color: #ffd700; background: rgba(255, 215, 0, 0.15); }
-    .item-list li a.diamond-item:hover { color: #38bdf8; background: rgba(56, 189, 248, 0.15); }
-    .item-list li a.ruby-item:hover { color: #f43f5e; background: rgba(244, 63, 94, 0.15); }
-
-    /* Main Area */
     main {
-      flex: 1;
-      background: var(--panel-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px;
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 28px;
     }
 
-    /* News / Magazine Box */
-    .news-card {
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.15), rgba(236, 72, 153, 0.1));
-      border: 1px solid var(--active-accent);
-      border-radius: 14px;
-      padding: 24px;
+    .announcement-banner {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.12) 0%, rgba(255, 140, 0, 0.06) 100%);
+      border: 1px solid var(--accent-gold);
+      border-radius: var(--radius-lg);
+      padding: 28px;
       position: relative;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 0 30px rgba(255, 215, 0, 0.05);
       overflow: hidden;
-      transition: border-color 0.3s;
     }
 
-    .news-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--active-accent);
-      color: #fff;
-      font-size: 0.75rem;
-      font-weight: 800;
-      padding: 4px 12px;
-      border-radius: 20px;
-      margin-bottom: 12px;
+    .announcement-banner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 3px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+    }
+
+    .announcement-tag {
+      background: linear-gradient(135deg, var(--accent-gold), #ff8c00);
+      color: #000;
+      font-size: 0.78rem;
+      font-weight: 900;
+      padding: 5px 14px;
+      border-radius: 30px;
+      display: inline-block;
+      margin-bottom: 14px;
       text-transform: uppercase;
-      transition: background-color 0.3s;
+      letter-spacing: 1px;
     }
 
-    .news-title {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: #fff;
+    .announcement-title {
+      font-size: 1.5rem;
+      font-weight: 900;
       margin-bottom: 10px;
+      color: #fff;
+      letter-spacing: -0.3px;
     }
 
-    .news-content {
+    .announcement-body {
       color: #cbd5e1;
-      font-size: 0.98rem;
+      font-size: 1rem;
       line-height: 1.6;
-      background: rgba(0, 0, 0, 0.25);
-      padding: 16px;
-      border-radius: 10px;
-      border-left: 4px solid var(--active-accent);
-      transition: border-left-color 0.3s;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      border-left: 4px solid var(--accent-gold);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
     }
 
-    /* Preview Card */
-    .preview-card {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 24px;
-      transition: all 0.3s ease;
+    .showcase-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 36px;
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      position: relative;
+      transition: var(--transition);
     }
 
-    .preview-card h2 {
-      font-size: 1.8rem;
+    .showcase-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .showcase-title {
+      font-size: 2.3rem;
+      font-weight: 900;
+      color: var(--accent-gold);
+      transition: var(--transition);
+      text-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
+      letter-spacing: -0.5px;
+    }
+
+    .showcase-category {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      color: var(--text-sub);
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-size: 0.85rem;
       font-weight: 800;
-      color: var(--active-accent);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .showcase-desc {
+      color: var(--text-sub);
+      font-size: 1.05rem;
+      line-height: 1.7;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: center;
+      transition: var(--transition);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .metric-card:hover {
+      border-color: var(--accent-gold);
+      transform: translateY(-4px);
+      box-shadow: 0 15px 30px rgba(255, 215, 0, 0.15);
+    }
+
+    .metric-number {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--accent-gold);
+      text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    }
+
+    .metric-label {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      font-weight: 700;
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .gallery-container {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .gallery-title {
+      font-size: 1.3rem;
+      font-weight: 900;
+      margin-bottom: 20px;
+      color: #fff;
       display: flex;
       align-items: center;
-      gap: 12px;
-      transition: color 0.3s;
-    }
-
-    .preview-card .badge {
-      font-size: 0.85rem;
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--text-muted);
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-weight: 600;
-    }
-
-    .preview-card p {
-      color: var(--text-muted);
-      margin-top: 8px;
-      font-size: 0.92rem;
-    }
-
-    /* Stats Grid */
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 16px;
-    }
-
-    .stat-box {
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid var(--border);
-      padding: 20px;
-      border-radius: 12px;
-      text-align: center;
-    }
-
-    .stat-box h3 {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: #f1f5f9;
-    }
-
-    .stat-box span {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-
-    /* Gallery */
-    .gallery-head {
-      font-size: 1.2rem;
-      font-weight: 700;
+      gap: 10px;
     }
 
     .gallery-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
+      gap: 20px;
     }
 
-    .gallery-item {
-      background: rgba(0, 0, 0, 0.25);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px;
+    .gallery-card {
+      border-radius: var(--radius-md);
       overflow: hidden;
-      transition: 0.2s;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--card-border);
+      transition: var(--transition);
     }
 
-    .gallery-item:hover {
-      border-color: var(--active-accent);
+    .gallery-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      border-color: var(--accent-gold);
+      box-shadow: 0 12px 30px rgba(255, 215, 0, 0.25);
     }
 
-    .gallery-item img {
+    .gallery-card img {
       width: 100%;
-      height: 180px;
+      height: 190px;
       object-fit: cover;
-      border-radius: 8px;
+      display: block;
     }
 
-    .gallery-item p {
+    .gallery-card p {
+      padding: 14px;
       text-align: center;
-      margin-top: 10px;
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      font-weight: 600;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-sub);
     }
 
-    /* Footer */
     footer {
       text-align: center;
-      padding: 20px;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      border-top: 1px solid var(--border);
-      margin-top: 20px;
+      padding: 28px;
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      border-top: 1px solid var(--card-border);
+      margin-top: auto;
+      background: rgba(3, 5, 10, 0.95);
     }
 
     footer strong {
-      color: #ffd700;
+      color: var(--accent-gold);
+      font-weight: 800;
     }
 
-    @media (max-width: 820px) {
-      header {
+    @media (max-width: 960px) {
+      .wrapper {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+      }
+
+      nav {
         flex-direction: column;
-        align-items: stretch;
+        gap: 16px;
+        padding: 20px;
       }
-      .search-bar {
-        max-width: 100%;
-      }
-      .app-container {
-        flex-direction: column;
-        padding: 0 16px;
-      }
-      aside {
+
+      .search-box {
         width: 100%;
       }
-      main {
-        padding: 20px;
+
+      .metrics-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .showcase-title {
+        font-size: 1.8rem;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <div class="brand-wrap">
-      <div class="logo-text">SWING OBBY WIKI</div>
-      <div class="author-tag">By Fahd</div>
+  <nav>
+    <div class="brand">
+      <div class="brand-title">SWING OBBY HUB</div>
+      <div class="author-badge">BY FAHD</div>
     </div>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Search item..." onkeyup="searchWiki()">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search database..." onkeyup="filterItems()">
     </div>
-  </header>
+  </nav>
 
-  <!-- Content Container -->
-  <div class="app-container">
+  <div class="wrapper">
 
-    <!-- Sidebar -->
     <aside>
       
-      <!-- Rarities -->
-      <div class="sidebar-section">
-        <button class="section-btn" onclick="toggleMenu('rarityGroup')">
-          💎 Rarities <span id="arr-rarityGroup">▼</span>
+      <div class="menu-group-title">Database Menu</div>
+
+      <!-- ALL LINKS SECTION -->
+      <div>
+        <button class="accordion-btn" onclick="toggleAccordion('linksList')">
+          🔗 ALL LINKS <span id="arr-linksList">▼</span>
         </button>
-        <ul id="rarityGroup" class="item-list">
-          <li><a href="javascript:void(0)" onclick="selectItem('Common', 'Rarity', '#94a3b8')">⚪ Common</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Uncommon', 'Rarity', '#22c55e')">🟢 Uncommon</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Rare', 'Rarity', '#3b82f6')">🔵 Rare</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Epic', 'Rarity', '#a855f7')">🟣 Epic</a></li>
-          <li><a href="javascript:void(0)" class="gold-item" onclick="selectItem('Legendary', 'Rarity', '#ffd700')">🟡 Legendary</a></li>
-          <li><a href="javascript:void(0)" class="ruby-item" onclick="selectItem('Mythical', 'Rarity', '#f43f5e')">🔴 Mythical</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Secret', 'Rarity', '#475569')">⬛ Secret</a></li>
-          <li><a href="javascript:void(0)" class="gold-item" onclick="selectItem('OG', 'Rarity', '#ffd700')">👑 OG</a></li>
+        <ul id="linksList" class="accordion-content">
+          <li><a href="https://www.roblox.com/share?code=66a87503fa4d394bb2bc595e21ffb2ec&type=ExperienceDetails&stamp=1786991505623" target="_blank" style="color: #00a2ff;">🎮 MAP LINK</a></li>
+          <li><a href="https://discord.gg/DSSQ5JBmC" target="_blank" style="color: #5865f2;">💬 DISCORD LINK</a></li>
         </ul>
       </div>
 
-      <!-- Blocks -->
-      <div class="sidebar-section">
-        <button class="section-btn" onclick="toggleMenu('blocksGroup')">
-          📦 All Blocks <span id="arr-blocksGroup">▼</span>
+      <div>
+        <button class="accordion-btn" onclick="toggleAccordion('rarityList')">
+          💎 Rarities <span id="arr-rarityList">▼</span>
         </button>
-        <ul id="blocksGroup" class="item-list">
-          <li><a href="javascript:void(0)" onclick="selectItem('Sigma', 'Block', '#a855f7')">🗿 Sigma</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Random', 'Block', '#64748b')">❓ Random</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Whiteblock', 'Block', '#f8fafc')">⬜ Whiteblock</a></li>
-          <li><a href="javascript:void(0)" class="gold-item" onclick="selectItem('Vip', 'Block', '#ffd700')">⭐ Vip</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Discoman', 'Block', '#ec4899')">🕺 Discoman</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Firedancer', 'Block', '#f97316')">💃 Firedancer</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Partyguys', 'Block', '#06b6d4')">🥳 Partyguys</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('DJNoob', 'Block', '#3b82f6')">🎧 DJNoob</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Sparkleboy', 'Block', '#eab308')">✨ Sparkleboy</a></li>
-          <li><a href="javascript:void(0)" class="ruby-item" onclick="selectItem('Redparty', 'Block', '#ef4444')">🔴 Redparty</a></li>
-          <li><a href="javascript:void(0)" class="gold-item" onclick="selectItem('Yellowparty', 'Block', '#eab308')">🟡 Yellowparty</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Purpleparty', 'Block', '#a855f7')">🟣 Purpleparty</a></li>
-          <li><a href="javascript:void(0)" class="gold-item" onclick="selectItem('Worldcup', 'Block', '#ffd700')">🏆 Worldcup</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Pool', 'Block', '#06b6d4')">🏊 Pool</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Hotdog', 'Block', '#f97316')">🌭 Hotdog</a></li>
-          <li><a href="javascript:void(0)" class="gold-item" onclick="selectItem('Sun', 'Block', '#facc15')">☀️ Sun</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Beach', 'Block', '#38bdf8')">🏖️ Beach</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Goal', 'Block', '#22c55e')">⚽ Goal</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Jandel', 'Block', '#64748b')">🔧 Jandel</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Football', 'Block', '#f97316')">🏈 Football</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Book', 'Block', '#3b82f6')">📚 Book</a></li>
-          <li><a href="javascript:void(0)" class="ruby-item" onclick="selectItem('Bloodmoon', 'Block', '#9f1239')">🌙 Bloodmoon</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Mm', 'Block', '#8b5cf6')">🔮 Mm</a></li>
-          <li><a href="javascript:void(0)" class="diamond-item" onclick="selectItem('Ice', 'Block', '#38bdf8')">🧊 Ice</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Sushi', 'Block', '#f43f5e')">🍣 Sushi</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Oreo', 'Block', '#f8fafc')">🍪 Oreo</a></li>
-          <li><a href="javascript:void(0)" class="gold-item" onclick="selectItem('Fries', 'Block', '#eab308')">🍟 Fries</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Tilliboy', 'Block', '#3b82f6')">👦 Tilliboy</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('C5OMI', 'Block', '#06b6d4')">🤖 C5OMI</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Tung Tung', 'Block', '#ec4899')">🎶 Tung Tung</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Locki', 'Block', '#64748b')">🔒 Locki</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Burger', 'Block', '#f97316')">🍔 Burger</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Admin', 'Block', '#ef4444')">🛠️ Admin</a></li>
-          <li><a href="javascript:void(0)" class="gold-item" onclick="selectItem('Super', 'Block', '#eab308')">⚡ Super</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Plus', 'Block', '#22c55e')">➕ Plus</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Pen', 'Block', '#06b6d4')">✏️ Pen</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Oto', 'Block', '#a855f7')">🤖 Oto</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Boto', 'Block', '#3b82f6')">🤖 Boto</a></li>
-          <li><a href="javascript:void(0)" class="gold-item" onclick="selectItem('Flocki', 'Block', '#facc15')">🐥 Flocki</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Sproti', 'Block', '#22c55e')">🌱 Sproti</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Frot', 'Block', '#22c55e')">🐸 Frot</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Brot', 'Block', '#f97316')">🍞 Brot</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Brown', 'Block', '#b45309')">🤎 Brown</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Purple', 'Block', '#a855f7')">💜 Purple</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Orange', 'Block', '#f97316')">🧡 Orange</a></li>
-          <li><a href="javascript:void(0)" class="gold-item" onclick="selectItem('Yellow', 'Block', '#eab308')">💛 Yellow</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Pink', 'Block', '#ec4899')">🩷 Pink</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Green', 'Block', '#22c55e')">💚 Green</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Blue', 'Block', '#3b82f6')">💙 Blue</a></li>
-          <li><a href="javascript:void(0)" class="ruby-item" onclick="selectItem('Red', 'Block', '#ef4444')">❤️ Red</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Black', 'Block', '#1e293b')">🖤 Black</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('White', 'Block', '#f8fafc')">🤍 White</a></li>
+        <ul id="rarityList" class="accordion-content">
+          <li><a href="javascript:void(0)" onclick="inspectItem('Common', 'Rarity', '#94a3b8')">⚪ Common</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Uncommon', 'Rarity', '#22c55e')">🟢 Uncommon</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Rare', 'Rarity', '#3b82f6')">🔵 Rare</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Epic', 'Rarity', '#a855f7')">🟣 Epic</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Legendary', 'Rarity', '#ffd700')">🟡 Legendary</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Mythical', 'Rarity', '#f43f5e')">🔴 Mythical</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Secret', 'Rarity', '#475569')">⬛ Secret</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('OG', 'Rarity', '#ffd700')">👑 OG</a></li>
         </ul>
       </div>
 
-      <!-- Mutations -->
-      <div class="sidebar-section">
-        <button class="section-btn" onclick="toggleMenu('mutationGroup')">
-          🧪 Mutations <span id="arr-mutationGroup">▼</span>
+      <div>
+        <button class="accordion-btn" onclick="toggleAccordion('blocksList')">
+          📦 All Blocks <span id="arr-blocksList">▼</span>
         </button>
-        <ul id="mutationGroup" class="item-list">
-          <li><a href="javascript:void(0)" class="ruby-item" onclick="selectItem('Ruby', 'Mutation', '#f43f5e')">🔻 Ruby</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Neon', 'Mutation', '#22c55e')">💡 Neon</a></li>
-          <li><a href="javascript:void(0)" class="diamond-item" onclick="selectItem('Diamond', 'Mutation', '#38bdf8')">💎 Diamond</a></li>
-          <li><a href="javascript:void(0)" class="gold-item" onclick="selectItem('Golden', 'Mutation', '#ffd700')">🪙 Golden</a></li>
-          <li><a href="javascript:void(0)" onclick="selectItem('Normal', 'Mutation', '#94a3b8')">⚙️ Normal</a></li>
+        <ul id="blocksList" class="accordion-content">
+          <li><a href="javascript:void(0)" onclick="inspectItem('Sigma', 'Block', '#a855f7')">🗿 Sigma</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Random', 'Block', '#64748b')">❓ Random</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Whiteblock', 'Block', '#f8fafc')">⬜ Whiteblock</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Vip', 'Block', '#ffd700')">⭐ Vip</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Discoman', 'Block', '#ec4899')">🕺 Discoman</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Firedancer', 'Block', '#f97316')">💃 Firedancer</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Partyguys', 'Block', '#06b6d4')">🥳 Partyguys</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('DJNoob', 'Block', '#3b82f6')">🎧 DJNoob</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Sparkleboy', 'Block', '#ffd700')">✨ Sparkleboy</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Redparty', 'Block', '#ef4444')">🔴 Redparty</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Yellowparty', 'Block', '#ffd700')">🟡 Yellowparty</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Purpleparty', 'Block', '#a855f7')">🟣 Purpleparty</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Worldcup', 'Block', '#ffd700')">🏆 Worldcup</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Pool', 'Block', '#06b6d4')">🏊 Pool</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Hotdog', 'Block', '#f97316')">🌭 Hotdog</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Sun', 'Block', '#ffd700')">☀️ Sun</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Beach', 'Block', '#38bdf8')">🏖️ Beach</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Goal', 'Block', '#22c55e')">⚽ Goal</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Jandel', 'Block', '#64748b')">🔧 Jandel</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Football', 'Block', '#f97316')">🏈 Football</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Book', 'Block', '#3b82f6')">📚 Book</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Bloodmoon', 'Block', '#9f1239')">🌙 Bloodmoon</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Mm', 'Block', '#8b5cf6')">🔮 Mm</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Ice', 'Block', '#38bdf8')">🧊 Ice</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Sushi', 'Block', '#f43f5e')">🍣 Sushi</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Oreo', 'Block', '#f8fafc')">🍪 Oreo</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Fries', 'Block', '#ffd700')">🍟 Fries</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Tilliboy', 'Block', '#3b82f6')">👦 Tilliboy</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('C5OMI', 'Block', '#06b6d4')">🤖 C5OMI</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Tung Tung', 'Block', '#ec4899')">🎶 Tung Tung</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Locki', 'Block', '#64748b')">🔒 Locki</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Burger', 'Block', '#f97316')">🍔 Burger</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Admin', 'Block', '#ef4444')">🛠️ Admin</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Super', 'Block', '#ffd700')">⚡ Super</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Plus', 'Block', '#22c55e')">➕ Plus</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Pen', 'Block', '#06b6d4')">✏️ Pen</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Oto', 'Block', '#a855f7')">🤖 Oto</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Boto', 'Block', '#3b82f6')">🤖 Boto</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Flocki', 'Block', '#ffd700')">🐥 Flocki</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Sproti', 'Block', '#22c55e')">🌱 Sproti</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Frot', 'Block', '#22c55e')">🐸 Frot</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Brot', 'Block', '#f97316')">🍞 Brot</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Brown', 'Block', '#b45309')">🤎 Brown</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Purple', 'Block', '#a855f7')">💜 Purple</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Orange', 'Block', '#f97316')">🧡 Orange</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Yellow', 'Block', '#ffd700')">💛 Yellow</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Pink', 'Block', '#ec4899')">🩷 Pink</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Green', 'Block', '#22c55e')">💚 Green</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Blue', 'Block', '#3b82f6')">💙 Blue</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Red', 'Block', '#ef4444')">❤️ Red</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Black', 'Block', '#1e293b')">🖤 Black</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('White', 'Block', '#f8fafc')">🤍 White</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <button class="accordion-btn" onclick="toggleAccordion('mutationsList')">
+          🧪 Mutations <span id="arr-mutationsList">▼</span>
+        </button>
+        <ul id="mutationsList" class="accordion-content">
+          <li><a href="javascript:void(0)" onclick="inspectItem('Ruby', 'Mutation', '#f43f5e')">🔻 Ruby</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Neon', 'Mutation', '#22c55e')">💡 Neon</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Diamond', 'Mutation', '#38bdf8')">💎 Diamond</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Golden', 'Mutation', '#ffd700')">🪙 Golden</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Normal', 'Mutation', '#94a3b8')">⚙️ Normal</a></li>
         </ul>
       </div>
 
     </aside>
 
-    <!-- Main Content -->
     <main>
-      
-      <!-- Swing Obby For Blocks Magazines / News Box -->
-      <div class="news-card">
-        <div class="news-badge">📰 Swing Obby Magazine & Updates</div>
-        <div class="news-title">🔥 Major Announcement & Secrets!</div>
-        <div class="news-content">
+
+      <div class="announcement-banner">
+        <span class="announcement-tag">📢 News & Official Updates</span>
+        <div class="announcement-title">Major Code System Release</div>
+        <div class="announcement-body">
           "We have created a Code system! 💻 If this is real, then we are heading towards the BIGGEST UPDATE in Swing Obby For Blocks! 🚀🔥"
         </div>
       </div>
 
-      <!-- Interactive Preview Card -->
-      <div id="previewCard" class="preview-card">
-        <h2 id="cardTitle">Select Any Item</h2>
-        <span id="cardBadge" class="badge">Database Explorer</span>
-        <p id="cardDesc">Click on any block, rarity, or mutation from the left navigation menu to view details and dynamic color theme.</p>
-      </div>
-
-      <!-- Stats -->
-      <div class="stats-row">
-        <div class="stat-box">
-          <h3>8</h3>
-          <span>Rarities</span>
+      <div class="showcase-card">
+        <div class="showcase-header">
+          <div id="targetTitle" class="showcase-title">Select Any Item</div>
+          <div id="targetBadge" class="showcase-category">Database Explorer</div>
         </div>
-        <div class="stat-box">
-          <h3>52</h3>
-          <span>Blocks</span>
-        </div>
-        <div class="stat-box">
-          <h3>5</h3>
-          <span>Mutations</span>
+        <div id="targetDesc" class="showcase-desc">
+          Choose a block, rarity, or mutation from the navigation menu on the left to inspect its parameters and adaptive gold theme colors.
         </div>
       </div>
 
-      <!-- Showcase -->
-      <div class="gallery-head">🖼️ Game World Showcase</div>
-
-      <div class="gallery-grid">
-        <div class="gallery-item">
-          <img src="https://i.ibb.co/G4y02RCF/1000002893.jpg" alt="Main Area" loading="lazy">
-          <p>Main Swing Stage & Upgrades Booth</p>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-number">8</div>
+          <div class="metric-label">Total Rarities</div>
         </div>
-        <div class="gallery-item">
-          <img src="https://i.ibb.co/9kXFWmLC/1000002892.jpg" alt="Blocks Arena" loading="lazy">
-          <p>Blocks Arena & Multipliers Zone</p>
+        <div class="metric-card">
+          <div class="metric-number">52</div>
+          <div class="metric-label">Registered Blocks</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-number">5</div>
+          <div class="metric-label">Mutations</div>
+        </div>
+      </div>
+
+      <div class="gallery-container">
+        <div class="gallery-title">🖼️ Game Environment Preview</div>
+        <div class="gallery-grid">
+          <div class="gallery-card">
+            <img src="https://i.ibb.co/G4y02RCF/1000002893.jpg" alt="Stage Preview" loading="lazy">
+            <p>Main Swing Stage & Upgrades Booth</p>
+          </div>
+          <div class="gallery-card">
+            <img src="https://i.ibb.co/9kXFWmLC/1000002892.jpg" alt="Arena Preview" loading="lazy">
+            <p>Blocks Arena & Multipliers Zone</p>
+          </div>
         </div>
       </div>
 
@@ -542,84 +623,68 @@
 
   </div>
 
-  <!-- Footer -->
   <footer>
-    Official Database Designed & Crafted <strong>By Fahd</strong> • Swing Obby For Blocks
+    Designed & Built <strong>By Fahd</strong> • Swing Obby For Blocks Ultra HD Database
   </footer>
 
-  <!-- JavaScript -->
   <script>
-    function toggleMenu(id) {
+    function toggleAccordion(id) {
       const list = document.getElementById(id);
       const arrow = document.getElementById('arr-' + id);
       if (!list || !arrow) return;
 
-      const isOpen = list.classList.contains('open');
-      list.classList.toggle('open');
-      arrow.innerText = isOpen ? '▼' : '▲';
+      const isExpanded = list.classList.contains('active');
+      list.classList.toggle('active');
+      arrow.innerText = isExpanded ? '▼' : '▲';
     }
 
-    function selectItem(name, category, colorHex) {
-      const title = document.getElementById('cardTitle');
-      const badge = document.getElementById('cardBadge');
-      const desc = document.getElementById('cardDesc');
+    function inspectItem(title, category, color) {
+      const titleElem = document.getElementById('targetTitle');
+      const badgeElem = document.getElementById('targetBadge');
+      const descElem = document.getElementById('targetDesc');
 
-      if (title) title.innerText = name;
-      if (badge) badge.innerText = 'Category: ' + category;
-      if (desc) desc.innerText = `Detailed overview and status for ${name} (${category}) in Swing Obby For Blocks.`;
-
-      document.documentElement.style.setProperty('--active-accent', colorHex);
-      
-      const glowRgba = hexToRgba(colorHex, 0.25);
-      document.documentElement.style.setProperty('--active-glow', glowRgba);
-    }
-
-    function hexToRgba(hex, alpha) {
-      if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-        let c = hex.substring(1).split('');
-        if (c.length === 3) {
-          c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-        }
-        c = '0x' + c.join('');
-        return 'rgba(' + [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(',') + ',' + alpha + ')';
+      if (titleElem) {
+        titleElem.innerText = title;
+        titleElem.style.color = color;
+        titleElem.style.textShadow = `0 0 25px ${color}66`;
       }
-      return 'rgba(99, 102, 241, 0.25)';
+      if (badgeElem) badgeElem.innerText = 'Category: ' + category;
+      if (descElem) descElem.innerText = `Viewing parameters and properties for ${title} (${category}) inside Swing Obby For Blocks.`;
     }
 
-    function searchWiki() {
-      const input = document.getElementById('searchInput').value.trim().toLowerCase();
-      const lists = document.querySelectorAll('.item-list');
+    function filterItems() {
+      const query = document.getElementById('searchInput').value.toLowerCase().trim();
+      const lists = document.querySelectorAll('.accordion-content');
 
       lists.forEach(list => {
-        const items = list.getElementsByTagName('li');
-        let found = false;
+        const items = list.querySelectorAll('li');
+        let hasMatch = false;
 
-        for (let item of items) {
+        items.forEach(item => {
           const text = item.textContent.toLowerCase();
-          if (input === "" || text.includes(input)) {
-            item.style.display = "";
-            if (input !== "" && text.includes(input)) found = true;
+          if (query === '' || text.includes(query)) {
+            item.style.display = '';
+            if (query !== '' && text.includes(query)) hasMatch = true;
           } else {
-            item.style.display = "none";
+            item.style.display = 'none';
           }
-        }
+        });
 
         const arrow = document.getElementById('arr-' + list.id);
-        if (input !== "") {
-          if (found) {
-            list.classList.add('open');
+        if (query !== '') {
+          if (hasMatch) {
+            list.classList.add('active');
             if (arrow) arrow.innerText = '▲';
           } else {
-            list.classList.remove('open');
+            list.classList.remove('active');
             if (arrow) arrow.innerText = '▼';
           }
         } else {
-          list.classList.remove('open');
+          list.classList.remove('active');
           if (arrow) arrow.innerText = '▼';
         }
       });
     }
   </script>
-
 </body>
 </html>

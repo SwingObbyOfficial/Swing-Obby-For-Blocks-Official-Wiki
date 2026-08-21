@@ -3,21 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Swing Obby For Blocks - Ultra HD Wiki Hub</title>
+  <title>Swing Obby For Blocks - 2SP Ultra Edition</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #03050a;
-      --card-bg: rgba(15, 20, 32, 0.75);
-      --card-border: rgba(255, 215, 0, 0.2);
-      --accent-gold: #ffd700;
-      --accent-gold-bright: #fff3a1;
-      --accent-glow: rgba(255, 215, 0, 0.4);
-      --text-main: #f8fafc;
-      --text-sub: #94a3b8;
+      --bg-white: #fafafa;
+      --card-bg: #ffffff;
+      --card-border: #fee2e2;
+      --primary-red: #dc2626;
+      --primary-yellow: #eab308;
+      --text-main: #0f172a;
+      --text-sub: #475569;
       --radius-lg: 24px;
-      --radius-md: 14px;
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --radius-md: 16px;
+      --transition-fast: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-smooth: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes rainbowGlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     * {
@@ -29,46 +35,32 @@
     }
 
     body {
-      background-color: var(--bg-dark);
+      background-color: var(--bg-white);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       background-image: 
-        radial-gradient(circle at 15% 15%, rgba(255, 215, 0, 0.12) 0%, transparent 45%),
-        radial-gradient(circle at 85% 85%, rgba(255, 140, 0, 0.08) 0%, transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.5) 0%, transparent 100%);
+        radial-gradient(circle at 5% 5%, rgba(234, 179, 8, 0.12) 0%, transparent 35%),
+        radial-gradient(circle at 95% 95%, rgba(220, 38, 38, 0.12) 0%, transparent 35%);
       background-attachment: fixed;
       overflow-x: hidden;
     }
 
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(5, 7, 15, 0.8);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(255, 215, 0, 0.3);
-      border-radius: 10px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--accent-gold);
-    }
-
     nav {
-      background: rgba(3, 5, 10, 0.85);
-      -webkit-backdrop-filter: blur(24px);
-      backdrop-filter: blur(24px);
-      border-bottom: 1px solid var(--card-border);
-      padding: 18px 40px;
+      background: rgba(255, 255, 255, 0.92);
+      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(20px);
+      border-bottom: 3px solid transparent;
+      border-image: linear-gradient(90deg, #dc2626, #eab308, #2563eb, #16a34a) 1;
+      padding: 16px 40px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     }
 
     .brand {
@@ -78,26 +70,32 @@
     }
 
     .brand-title {
-      font-size: 1.5rem;
+      font-size: 1.7rem;
       font-weight: 900;
       letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #ffffff 0%, var(--accent-gold-bright) 50%, var(--accent-gold) 100%);
+      background: linear-gradient(90deg, #dc2626, #eab308, #2563eb, #16a34a, #dc2626);
+      background-size: 300% 300%;
+      animation: rainbowGlow 5s linear infinite;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
+      will-change: background-position;
     }
 
     .author-badge {
-      background: linear-gradient(135deg, #ffd700, #ff8c00);
-      color: #000;
+      background: linear-gradient(135deg, #dc2626, #eab308);
+      color: #fff;
       font-weight: 900;
-      font-size: 0.72rem;
-      padding: 5px 14px;
+      font-size: 0.75rem;
+      padding: 6px 16px;
       border-radius: 30px;
-      letter-spacing: 1.2px;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+      letter-spacing: 1px;
+      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.35);
       text-transform: uppercase;
-      border: 1px solid rgba(255, 255, 255, 0.4);
+      transition: var(--transition-smooth);
+    }
+
+    .author-badge:hover {
+      transform: scale(1.08) rotate(-2deg);
     }
 
     .search-box {
@@ -107,21 +105,22 @@
 
     .search-box input {
       width: 100%;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--card-border);
+      background: #ffffff;
+      border: 2px solid #fef08a;
       padding: 12px 20px;
       border-radius: 30px;
-      color: #fff;
-      font-size: 0.92rem;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      font-weight: 600;
       outline: none;
-      transition: var(--transition);
-      box-shadow: inset 0 2px 4px rgba(0,0,0,0.4);
+      transition: var(--transition-fast);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
     }
 
     .search-box input:focus {
-      border-color: var(--accent-gold);
-      background: rgba(255, 255, 255, 0.08);
-      box-shadow: 0 0 25px var(--accent-glow), inset 0 2px 4px rgba(0,0,0,0.4);
+      border-color: var(--primary-red);
+      box-shadow: 0 0 20px rgba(220, 38, 38, 0.25);
+      transform: translateY(-1px);
     }
 
     .wrapper {
@@ -137,22 +136,20 @@
 
     aside {
       background: var(--card-bg);
-      border: 1px solid var(--card-border);
+      border: 2px solid #fef08a;
       border-radius: var(--radius-lg);
       padding: 24px;
-      -webkit-backdrop-filter: blur(20px);
-      backdrop-filter: blur(20px);
       display: flex;
       flex-direction: column;
       gap: 16px;
       height: fit-content;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.04);
     }
 
     .menu-group-title {
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       font-weight: 900;
-      color: var(--accent-gold);
+      color: var(--primary-red);
       text-transform: uppercase;
       letter-spacing: 2px;
       margin: 8px 0 4px 8px;
@@ -160,9 +157,9 @@
 
     .accordion-btn {
       width: 100%;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--card-border);
-      color: #fff;
+      background: #fefce8;
+      border: 2px solid #fef08a;
+      color: var(--text-main);
       padding: 14px 18px;
       border-radius: var(--radius-md);
       font-weight: 800;
@@ -171,22 +168,23 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: var(--transition);
+      transition: var(--transition-smooth);
+      will-change: transform;
     }
 
     .accordion-btn:hover {
-      background: rgba(255, 215, 0, 0.08);
-      border-color: var(--accent-gold);
-      color: var(--accent-gold);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      background: #fee2e2;
+      border-color: var(--primary-red);
+      color: var(--primary-red);
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 8px 20px rgba(220, 38, 38, 0.12);
     }
 
     .accordion-content {
       display: none;
       list-style: none;
       padding: 10px 6px;
-      max-height: 300px;
+      max-height: 320px;
       overflow-y: auto;
     }
 
@@ -201,17 +199,40 @@
       align-items: center;
       justify-content: space-between;
       padding: 10px 14px;
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       font-weight: 700;
-      border-radius: 10px;
-      transition: var(--transition);
-      margin-bottom: 2px;
+      border-radius: 12px;
+      transition: var(--transition-fast);
+      margin-bottom: 3px;
     }
 
     .accordion-content li a:hover {
-      color: #fff;
-      background: rgba(255, 215, 0, 0.12);
-      padding-left: 18px;
+      color: var(--primary-red);
+      background: #fef2f2;
+      padding-left: 20px;
+      transform: translateX(4px);
+    }
+
+    .creator-fahd {
+      font-weight: 900;
+      font-size: 1.05rem;
+      color: #dc2626;
+    }
+
+    .creator-mrlol {
+      font-weight: 900;
+      font-size: 1.05rem;
+      background: linear-gradient(90deg, #dc2626, #eab308, #2563eb);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .role-text {
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      font-weight: 600;
+      display: block;
+      margin-top: 2px;
     }
 
     main {
@@ -221,65 +242,59 @@
     }
 
     .announcement-banner {
-      background: linear-gradient(135deg, rgba(255, 215, 0, 0.12) 0%, rgba(255, 140, 0, 0.06) 100%);
-      border: 1px solid var(--accent-gold);
+      background: linear-gradient(135deg, #fff1f2 0%, #fefce8 100%);
+      border: 2px solid #fca5a5;
       border-radius: var(--radius-lg);
       padding: 28px;
       position: relative;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 0 30px rgba(255, 215, 0, 0.05);
-      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(220, 38, 38, 0.08);
+      transition: var(--transition-smooth);
     }
 
-    .announcement-banner::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 3px;
-      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+    .announcement-banner:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(220, 38, 38, 0.12);
     }
 
     .announcement-tag {
-      background: linear-gradient(135deg, var(--accent-gold), #ff8c00);
-      color: #000;
+      background: linear-gradient(90deg, var(--primary-red), #b91c1c);
+      color: #fff;
       font-size: 0.78rem;
       font-weight: 900;
-      padding: 5px 14px;
+      padding: 6px 16px;
       border-radius: 30px;
       display: inline-block;
       margin-bottom: 14px;
       text-transform: uppercase;
       letter-spacing: 1px;
+      box-shadow: 0 4px 10px rgba(220, 38, 38, 0.25);
     }
 
     .announcement-title {
-      font-size: 1.5rem;
+      font-size: 1.55rem;
       font-weight: 900;
       margin-bottom: 10px;
-      color: #fff;
-      letter-spacing: -0.3px;
+      color: var(--text-main);
     }
 
     .announcement-body {
-      color: #cbd5e1;
-      font-size: 1rem;
+      color: var(--text-sub);
+      font-size: 1.02rem;
       line-height: 1.6;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 16px 20px;
+      background: #ffffff;
+      padding: 18px 22px;
       border-radius: var(--radius-md);
-      border-left: 4px solid var(--accent-gold);
-      -webkit-backdrop-filter: blur(10px);
-      backdrop-filter: blur(10px);
+      border-left: 5px solid var(--primary-yellow);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
     }
 
     .showcase-card {
       background: var(--card-bg);
-      border: 1px solid var(--card-border);
+      border: 2px solid #fef08a;
       border-radius: var(--radius-lg);
       padding: 36px;
-      -webkit-backdrop-filter: blur(20px);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
       position: relative;
-      transition: var(--transition);
     }
 
     .showcase-header {
@@ -292,30 +307,31 @@
     }
 
     .showcase-title {
-      font-size: 2.3rem;
+      font-size: 2.4rem;
       font-weight: 900;
-      color: var(--accent-gold);
-      transition: var(--transition);
-      text-shadow: 0 0 25px rgba(255, 215, 0, 0.3);
-      letter-spacing: -0.5px;
+      background: linear-gradient(90deg, #dc2626, #eab308, #2563eb, #16a34a, #dc2626);
+      background-size: 300% 300%;
+      animation: rainbowGlow 5s linear infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      will-change: background-position;
     }
 
     .showcase-category {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--card-border);
-      color: var(--text-sub);
-      padding: 8px 18px;
+      background: #fefce8;
+      border: 2px solid var(--primary-yellow);
+      color: #854d0e;
+      padding: 8px 20px;
       border-radius: 30px;
       font-size: 0.85rem;
-      font-weight: 800;
+      font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
     }
 
     .showcase-desc {
       color: var(--text-sub);
-      font-size: 1.05rem;
-      line-height: 1.7;
+      font-size: 1.08rem;
+      line-height: 1.75;
     }
 
     .metrics-grid {
@@ -326,52 +342,47 @@
 
     .metric-card {
       background: var(--card-bg);
-      border: 1px solid var(--card-border);
+      border: 2px solid #fee2e2;
       border-radius: var(--radius-md);
       padding: 24px;
       text-align: center;
-      transition: var(--transition);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      transition: var(--transition-smooth);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+      will-change: transform;
     }
 
     .metric-card:hover {
-      border-color: var(--accent-gold);
-      transform: translateY(-4px);
-      box-shadow: 0 15px 30px rgba(255, 215, 0, 0.15);
+      border-color: var(--primary-yellow);
+      transform: translateY(-6px) scale(1.02);
+      box-shadow: 0 15px 30px rgba(234, 179, 8, 0.15);
     }
 
     .metric-number {
-      font-size: 2.2rem;
+      font-size: 2.3rem;
       font-weight: 900;
-      color: var(--accent-gold);
-      text-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+      color: var(--primary-red);
     }
 
     .metric-label {
       font-size: 0.88rem;
       color: var(--text-sub);
-      font-weight: 700;
+      font-weight: 800;
       margin-top: 6px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
     .gallery-container {
       background: var(--card-bg);
-      border: 1px solid var(--card-border);
+      border: 2px solid #fee2e2;
       border-radius: var(--radius-lg);
       padding: 28px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     }
 
     .gallery-title {
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       font-weight: 900;
       margin-bottom: 20px;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      color: var(--text-main);
     }
 
     .gallery-grid {
@@ -383,15 +394,16 @@
     .gallery-card {
       border-radius: var(--radius-md);
       overflow: hidden;
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid var(--card-border);
-      transition: var(--transition);
+      background: #fff;
+      border: 2px solid #fef08a;
+      transition: var(--transition-smooth);
+      will-change: transform;
     }
 
     .gallery-card:hover {
-      transform: translateY(-6px) scale(1.01);
-      border-color: var(--accent-gold);
-      box-shadow: 0 12px 30px rgba(255, 215, 0, 0.25);
+      transform: translateY(-8px) scale(1.01);
+      border-color: var(--primary-red);
+      box-shadow: 0 15px 30px rgba(220, 38, 38, 0.15);
     }
 
     .gallery-card img {
@@ -404,8 +416,8 @@
     .gallery-card p {
       padding: 14px;
       text-align: center;
-      font-size: 0.9rem;
-      font-weight: 700;
+      font-size: 0.92rem;
+      font-weight: 800;
       color: var(--text-sub);
     }
 
@@ -413,15 +425,36 @@
       text-align: center;
       padding: 28px;
       color: var(--text-sub);
-      font-size: 0.9rem;
-      border-top: 1px solid var(--card-border);
+      font-size: 0.95rem;
+      border-top: 3px solid transparent;
+      border-image: linear-gradient(90deg, #dc2626, #eab308, #2563eb, #16a34a) 1;
       margin-top: auto;
-      background: rgba(3, 5, 10, 0.95);
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
     }
 
     footer strong {
-      color: var(--accent-gold);
+      color: var(--primary-red);
+      font-weight: 900;
+    }
+
+    .visitor-badge {
+      background: #fefce8;
+      border: 2px solid #fef08a;
+      padding: 8px 20px;
+      border-radius: 30px;
+      font-size: 0.95rem;
       font-weight: 800;
+      color: var(--text-main);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .visitor-badge span {
+      color: var(--primary-red);
+      font-weight: 900;
     }
 
     @media (max-width: 960px) {
@@ -443,10 +476,6 @@
       .metrics-grid {
         grid-template-columns: 1fr;
       }
-
-      .showcase-title {
-        font-size: 1.8rem;
-      }
     }
   </style>
 </head>
@@ -458,15 +487,39 @@
       <div class="author-badge">BY FAHD</div>
     </div>
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Search database..." onkeyup="filterItems()">
+      <input type="text" id="searchInput" placeholder="Search  🔎" onkeyup="filterItems()">
     </div>
   </nav>
 
   <div class="wrapper">
 
     <aside>
-      
       <div class="menu-group-title">Database Menu</div>
+
+      <!-- CREATORS SECTION -->
+      <div>
+        <button class="accordion-btn" onclick="toggleAccordion('creatorsList')">
+          👑 Creators✨️ <span id="arr-creatorsList">▼</span>
+        </button>
+        <ul id="creatorsList" class="accordion-content">
+          <li>
+            <a href="javascript:void(0)" onclick="inspectItem('Fahd', 'Creator Of Website', '#dc2626', 'Lead Designer & Developer of the official Swing Obby Wiki Hub.')">
+              <div>
+                <span class="creator-fahd">Fahd</span>
+                <span class="role-text">[Creator Of Website]</span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" onclick="inspectItem('MR.LoL', 'Owner Of Swing Obby For Blocks', '#eab308', 'The main creator and owner of the Swing Obby For Blocks experience.')">
+              <div>
+                <span class="creator-mrlol">MR.LoL</span>
+                <span class="role-text">[Owner Of Swing Obby For Blocks]</span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
 
       <!-- ALL LINKS SECTION -->
       <div>
@@ -484,14 +537,14 @@
           💎 Rarities <span id="arr-rarityList">▼</span>
         </button>
         <ul id="rarityList" class="accordion-content">
-          <li><a href="javascript:void(0)" onclick="inspectItem('Common', 'Rarity', '#94a3b8')">⚪ Common</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Uncommon', 'Rarity', '#22c55e')">🟢 Uncommon</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Rare', 'Rarity', '#3b82f6')">🔵 Rare</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Epic', 'Rarity', '#a855f7')">🟣 Epic</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Legendary', 'Rarity', '#ffd700')">🟡 Legendary</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Mythical', 'Rarity', '#f43f5e')">🔴 Mythical</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Secret', 'Rarity', '#475569')">⬛ Secret</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('OG', 'Rarity', '#ffd700')">👑 OG</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Common', 'Rarity', '#64748b')">⚪ Common</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Uncommon', 'Rarity', '#16a34a')">🟢 Uncommon</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Rare', 'Rarity', '#2563eb')">🔵 Rare</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Epic', 'Rarity', '#9333ea')">🟣 Epic</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Legendary', 'Rarity', '#eab308')">🟡 Legendary</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Mythical', 'Rarity', '#dc2626')">🔴 Mythical</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Secret', 'Rarity', '#1e293b')">⬛ Secret</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('OG', 'Rarity', '#eab308')">👑 OG</a></li>
         </ul>
       </div>
 
@@ -500,58 +553,58 @@
           📦 All Blocks <span id="arr-blocksList">▼</span>
         </button>
         <ul id="blocksList" class="accordion-content">
-          <li><a href="javascript:void(0)" onclick="inspectItem('Sigma', 'Block', '#a855f7')">🗿 Sigma</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Sigma', 'Block', '#9333ea')">🗿 Sigma</a></li>
           <li><a href="javascript:void(0)" onclick="inspectItem('Random', 'Block', '#64748b')">❓ Random</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Whiteblock', 'Block', '#f8fafc')">⬜ Whiteblock</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Vip', 'Block', '#ffd700')">⭐ Vip</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Discoman', 'Block', '#ec4899')">🕺 Discoman</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Firedancer', 'Block', '#f97316')">💃 Firedancer</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Partyguys', 'Block', '#06b6d4')">🥳 Partyguys</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('DJNoob', 'Block', '#3b82f6')">🎧 DJNoob</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Sparkleboy', 'Block', '#ffd700')">✨ Sparkleboy</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Redparty', 'Block', '#ef4444')">🔴 Redparty</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Yellowparty', 'Block', '#ffd700')">🟡 Yellowparty</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Purpleparty', 'Block', '#a855f7')">🟣 Purpleparty</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Worldcup', 'Block', '#ffd700')">🏆 Worldcup</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Pool', 'Block', '#06b6d4')">🏊 Pool</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Hotdog', 'Block', '#f97316')">🌭 Hotdog</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Sun', 'Block', '#ffd700')">☀️ Sun</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Beach', 'Block', '#38bdf8')">🏖️ Beach</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Goal', 'Block', '#22c55e')">⚽ Goal</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Whiteblock', 'Block', '#475569')">⬜ Whiteblock</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Vip', 'Block', '#eab308')">⭐ Vip</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Discoman', 'Block', '#db2777')">🕺 Discoman</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Firedancer', 'Block', '#ea580c')">💃 Firedancer</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Partyguys', 'Block', '#0891b2')">🥳 Partyguys</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('DJNoob', 'Block', '#2563eb')">🎧 DJNoob</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Sparkleboy', 'Block', '#eab308')">✨ Sparkleboy</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Redparty', 'Block', '#dc2626')">🔴 Redparty</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Yellowparty', 'Block', '#eab308')">🟡 Yellowparty</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Purpleparty', 'Block', '#9333ea')">🟣 Purpleparty</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Worldcup', 'Block', '#eab308')">🏆 Worldcup</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Pool', 'Block', '#0891b2')">🏊 Pool</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Hotdog', 'Block', '#ea580c')">🌭 Hotdog</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Sun', 'Block', '#eab308')">☀️ Sun</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Beach', 'Block', '#0284c7')">🏖️ Beach</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Goal', 'Block', '#16a34a')">⚽ Goal</a></li>
           <li><a href="javascript:void(0)" onclick="inspectItem('Jandel', 'Block', '#64748b')">🔧 Jandel</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Football', 'Block', '#f97316')">🏈 Football</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Book', 'Block', '#3b82f6')">📚 Book</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Football', 'Block', '#ea580c')">🏈 Football</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Book', 'Block', '#2563eb')">📚 Book</a></li>
           <li><a href="javascript:void(0)" onclick="inspectItem('Bloodmoon', 'Block', '#9f1239')">🌙 Bloodmoon</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Mm', 'Block', '#8b5cf6')">🔮 Mm</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Ice', 'Block', '#38bdf8')">🧊 Ice</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Sushi', 'Block', '#f43f5e')">🍣 Sushi</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Oreo', 'Block', '#f8fafc')">🍪 Oreo</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Fries', 'Block', '#ffd700')">🍟 Fries</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Tilliboy', 'Block', '#3b82f6')">👦 Tilliboy</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('C5OMI', 'Block', '#06b6d4')">🤖 C5OMI</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Tung Tung', 'Block', '#ec4899')">🎶 Tung Tung</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Mm', 'Block', '#7c3aed')">🔮 Mm</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Ice', 'Block', '#0284c7')">🧊 Ice</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Sushi', 'Block', '#e11d48')">🍣 Sushi</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Oreo', 'Block', '#1e293b')">🍪 Oreo</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Fries', 'Block', '#eab308')">🍟 Fries</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Tilliboy', 'Block', '#2563eb')">👦 Tilliboy</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('C5OMI', 'Block', '#0891b2')">🤖 C5OMI</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Tung Tung', 'Block', '#db2777')">🎶 Tung Tung</a></li>
           <li><a href="javascript:void(0)" onclick="inspectItem('Locki', 'Block', '#64748b')">🔒 Locki</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Burger', 'Block', '#f97316')">🍔 Burger</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Admin', 'Block', '#ef4444')">🛠️ Admin</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Super', 'Block', '#ffd700')">⚡ Super</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Plus', 'Block', '#22c55e')">➕ Plus</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Pen', 'Block', '#06b6d4')">✏️ Pen</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Oto', 'Block', '#a855f7')">🤖 Oto</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Boto', 'Block', '#3b82f6')">🤖 Boto</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Flocki', 'Block', '#ffd700')">🐥 Flocki</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Sproti', 'Block', '#22c55e')">🌱 Sproti</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Frot', 'Block', '#22c55e')">🐸 Frot</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Brot', 'Block', '#f97316')">🍞 Brot</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Burger', 'Block', '#ea580c')">🍔 Burger</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Admin', 'Block', '#dc2626')">🛠️ Admin</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Super', 'Block', '#eab308')">⚡ Super</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Plus', 'Block', '#16a34a')">➕ Plus</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Pen', 'Block', '#0891b2')">✏️ Pen</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Oto', 'Block', '#9333ea')">🤖 Oto</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Boto', 'Block', '#2563eb')">🤖 Boto</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Flocki', 'Block', '#eab308')">🐥 Flocki</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Sproti', 'Block', '#16a34a')">🌱 Sproti</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Frot', 'Block', '#16a34a')">🐸 Frot</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Brot', 'Block', '#ea580c')">🍞 Brot</a></li>
           <li><a href="javascript:void(0)" onclick="inspectItem('Brown', 'Block', '#b45309')">🤎 Brown</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Purple', 'Block', '#a855f7')">💜 Purple</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Orange', 'Block', '#f97316')">🧡 Orange</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Yellow', 'Block', '#ffd700')">💛 Yellow</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Pink', 'Block', '#ec4899')">🩷 Pink</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Green', 'Block', '#22c55e')">💚 Green</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Blue', 'Block', '#3b82f6')">💙 Blue</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Red', 'Block', '#ef4444')">❤️ Red</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Black', 'Block', '#1e293b')">🖤 Black</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('White', 'Block', '#f8fafc')">🤍 White</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Purple', 'Block', '#9333ea')">💜 Purple</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Orange', 'Block', '#ea580c')">🧡 Orange</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Yellow', 'Block', '#eab308')">💛 Yellow</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Pink', 'Block', '#db2777')">🩷 Pink</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Green', 'Block', '#16a34a')">💚 Green</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Blue', 'Block', '#2563eb')">💙 Blue</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Red', 'Block', '#dc2626')">❤️ Red</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Black', 'Block', '#0f172a')">🖤 Black</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('White', 'Block', '#64748b')">🤍 White</a></li>
         </ul>
       </div>
 
@@ -560,11 +613,11 @@
           🧪 Mutations <span id="arr-mutationsList">▼</span>
         </button>
         <ul id="mutationsList" class="accordion-content">
-          <li><a href="javascript:void(0)" onclick="inspectItem('Ruby', 'Mutation', '#f43f5e')">🔻 Ruby</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Neon', 'Mutation', '#22c55e')">💡 Neon</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Diamond', 'Mutation', '#38bdf8')">💎 Diamond</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Golden', 'Mutation', '#ffd700')">🪙 Golden</a></li>
-          <li><a href="javascript:void(0)" onclick="inspectItem('Normal', 'Mutation', '#94a3b8')">⚙️ Normal</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Ruby', 'Mutation', '#e11d48')">🔻 Ruby</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Neon', 'Mutation', '#16a34a')">💡 Neon</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Diamond', 'Mutation', '#0284c7')">💎 Diamond</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Golden', 'Mutation', '#eab308')">🪙 Golden</a></li>
+          <li><a href="javascript:void(0)" onclick="inspectItem('Normal', 'Mutation', '#64748b')">⚙️ Normal</a></li>
         </ul>
       </div>
 
@@ -586,7 +639,7 @@
           <div id="targetBadge" class="showcase-category">Database Explorer</div>
         </div>
         <div id="targetDesc" class="showcase-desc">
-          Choose a block, rarity, or mutation from the navigation menu on the left to inspect its parameters and adaptive gold theme colors.
+          Choose a block, rarity, mutation, or creator from the navigation menu on the left to inspect detailed properties.
         </div>
       </div>
 
@@ -624,10 +677,29 @@
   </div>
 
   <footer>
-    Designed & Built <strong>By Fahd</strong> • Swing Obby For Blocks Ultra HD Database
+    <div>Designed & Built <strong>By Fahd</strong> • Swing Obby For Blocks 2SP Edition</div>
+    <div class="visitor-badge">
+      👤: [<span id="visitorCount">0</span>]
+    </div>
   </footer>
 
   <script>
+    // VISITOR COUNTER SYSTEM
+    (function updateVisitorCounter() {
+      let count = localStorage.getItem('website_visitor_count');
+      if (!count) {
+        count = 1;
+      } else {
+        count = parseInt(count) + 1;
+      }
+      localStorage.setItem('website_visitor_count', count);
+      
+      const countElem = document.getElementById('visitorCount');
+      if (countElem) {
+        countElem.innerText = count.toLocaleString();
+      }
+    })();
+
     function toggleAccordion(id) {
       const list = document.getElementById(id);
       const arrow = document.getElementById('arr-' + id);
@@ -638,18 +710,21 @@
       arrow.innerText = isExpanded ? '▼' : '▲';
     }
 
-    function inspectItem(title, category, color) {
+    function inspectItem(title, category, color, customDesc) {
       const titleElem = document.getElementById('targetTitle');
       const badgeElem = document.getElementById('targetBadge');
       const descElem = document.getElementById('targetDesc');
 
       if (titleElem) {
         titleElem.innerText = title;
-        titleElem.style.color = color;
-        titleElem.style.textShadow = `0 0 25px ${color}66`;
+        titleElem.style.background = 'none';
+        titleElem.style.webkitBackgroundClip = 'initial';
+        titleElem.style.webkitTextFillColor = color;
       }
       if (badgeElem) badgeElem.innerText = 'Category: ' + category;
-      if (descElem) descElem.innerText = `Viewing parameters and properties for ${title} (${category}) inside Swing Obby For Blocks.`;
+      if (descElem) {
+        descElem.innerText = customDesc || `Viewing parameters and properties for ${title} (${category}) inside Swing Obby For Blocks.`;
+      }
     }
 
     function filterItems() {
